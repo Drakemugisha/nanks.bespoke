@@ -1,0 +1,26 @@
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+footer .social{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: wheat;
+}
+footer ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+footer ul li{
+    list-style: none;
+}
+footer ul a{
+    text-decoration: none;
+    color: wheat;
+}

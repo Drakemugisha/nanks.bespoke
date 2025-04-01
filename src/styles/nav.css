@@ -1,0 +1,119 @@
+nav{
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: wheat;
+    padding: 10px 0px 20px 0px;
+}
+nav img{
+    height: 40px;
+}
+nav ul li{
+    position: relative;
+    padding: 10px;
+    list-style: none;
+    border-bottom: 2px solid;
+    font-size: 1.2rem;
+}
+nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+nav ul li::after{
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: black;
+    z-index: 100;
+    transition: 0.5s;
+}
+nav ul li:hover::after{
+    height: 100%;
+}
+nav ul li span{
+    position: relative;
+    z-index: 1000;
+    color: black;
+}
+nav ul li:hover span{
+    color: white;
+}
+
+nav .hamburger {
+    position: absolute;
+    cursor: pointer;
+    z-index: 1000;
+    display: none;
+}
+
+nav .hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px 0;
+    transition: 0.4s ease;
+    display: block;
+}
+
+.hamburger.active span:first-child{
+    transform: rotate(45deg) translateX(6px);
+}
+
+.hamburger.active span:first-child + span{
+    transform: rotate(-45deg) translateX(6px);
+}
+.hamburger.active span:last-child{
+    display: none;
+}
+.shoping p{
+    color: black;
+    font-size: 12px;
+    transform: translate(20px, -35px);
+}
+.dropdown{
+    background-color: wheat;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.shop_list{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: black !important;
+}
+#whatsapp{
+    position: fixed;
+    background-color: white;
+    font-size: 2rem;
+    padding: 8px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px solid;
+    border-radius: 41% 59% 68% 32% / 54% 57% 43% 46% ;
+}
+
+@media (max-width: 768px) {
+    nav .hamburger{
+        display: block;
+        transform: translateY(-10px);
+    }
+    nav h2{
+        font-size: 1rem;
+    }
+    nav .shoping{
+        margin-left: 60px !important;
+    }
+    nav ul{
+        display: none !important;
+    }
+}

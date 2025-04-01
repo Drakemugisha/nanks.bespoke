@@ -1,0 +1,40 @@
+.cartcontainer{
+    margin-top: 100px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.cartcontainer h1{
+    font-size: large;
+    transform: translateY(-200px);
+    background-color: white;
+
+}
+  
+.cart ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+  
+.cart-item, .order-item {
+    margin-bottom: 10px;
+    padding: 20px;
+    border: 2px solid;
+    border-radius: 41% 59% 68% 32% / 54% 57% 43% 46% ;
+}
+  
+.cart button {
+    margin-top: 10px;
+}
+.cartimg{
+    width: 10rem;
+    aspect-ratio: 1;
+}
+.appointment{
+    border: 2px solid;
+    padding: 10px;
+    border-radius: 41% 59% 68% 32% / 54% 57% 43% 46% ;
+}
