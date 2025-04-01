@@ -11,6 +11,7 @@ export default  function SideBar({state}){
     
                     <ul>
                         <li> <a href="/"> <span>home</span> </a> </li>
+                        <li> <a href="/custom"> <span>appointment</span> </a> </li>
                         <li> <a href="/men"> <span>men</span> </a> </li>
                         <li> <a href="/women"> <span>women</span> </a> </li>
                         <li> <a href="/accessories"> <span>accessories</span> </a> </li>
