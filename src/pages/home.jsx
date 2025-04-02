@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Nav from '../components/navbar';
 import Footer from '../components/footer';
+import SEO from '../components/seo'
 import '../styles/home.css';
 import image from '../assets/IMG-20250118-WA0123.jpg';
 import image2 from '../assets/IMG-20250118-WA0115.jpg';
@@ -43,6 +44,14 @@ function Home() {
 
   return (
     <div>
+
+       <SEO 
+        title="Nanks Bespoke | Premium Tailored Suits & Clothing"
+        description="Experience premium bespoke tailoring at Nanks Bespoke. suits around kampala and the rest of uganda for 10+ years."
+        keywords="suit in kampala, kampala suits, uganda suits ,bespoke suits, tailored clothing, custom suits, premium tailoring, Nanks Bespoke"
+        pathname="/"
+      />
+
       {isLoading && <div className='loader-cont'>
         
           <Loader/>
@@ -75,7 +84,7 @@ function Home() {
           <img src={image2} alt="" />
           <img src={manne} alt="" />
           <div className="fit-everything">
-            <p>fit is everything, customize one that best describes you</p>
+            <p>Crafting timeless style with expert tailoring and premium materials. From luxurious fabrics to precision accessories, we provide everything you need for a flawless bespoke experience.</p>
             <div className="btn">
               <span> <a href="/custom"> book appointment </a></span>
             </div>
@@ -87,8 +96,8 @@ function Home() {
       </div>
 
       <div className="us text-xl">
-        <h2>why us?</h2>
-        <p>we have been making suits for 10+ years, we know what we are doing</p>
+        <h2>Why us?</h2>
+        <p>We have been making suits for 10+ years, we know what we are doing</p>
         <div className="social flex gap-4 m-6 p-3 text-3xl">
           <a href="https://www.facebook.com/"><FaFacebook/></a>
           <a href="https://www.facebook.com/"><FaInstagram/></a>

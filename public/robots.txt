@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /register
+Disallow: /api/
+
+Sitemap: https://nanksbespoke.com/sitemap.xml

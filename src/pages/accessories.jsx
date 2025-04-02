@@ -1,16 +1,26 @@
 import React, { useState,useEffect } from 'react';
 import Nav from '../components/navbar';
 import Footer from '../components/footer';
+import SEO from '../components/seo';
 import '../styles/men.css';
 import Cookies from 'js-cookie';
 import Product from '../components/product';
 import api from '../api';
+import Loader from '../components/loader';
 
 function Accessories() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000)}
+  );
 
   useEffect(() => {
       getProducts();
@@ -54,19 +64,47 @@ function Accessories() {
     alert('item added to cart')
   };
   
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
+
+  const filteredProducts = products.filter((product) => {
+    return product.name.toLowerCase().includes(searchQuery);
+  });
 
   return (
     <div className='mt-20'>
+
+      <SEO 
+        title="Premium Accessories | Complete Your Look | Nanks Bespoke"
+        description="Complete your look with our premium accessories collection. Handpicked to complement our bespoke suits at Nanks Bespoke."
+        keywords="fashion accessories, suit accessories, premium accessories, Nanks Bespoke accessories"
+        pathname="/accessories"
+      />
+
+      {isLoading && <div className='loader-cont'>
+        
+        <Loader/>
+      </div>}
+
       <Nav total={count}/>
       <div className="links flex justify-around">
-        <h1>Shop for Accessories</h1>
-        <div className='flex gap-2 '>
+        <div>
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="Search for products"
+            className="border-2 border-white p-2 rounded-xl"
+          />
+        </div>
+        <div className='flex gap-2 max-sm:hidden'>
           <a href="/men" className='border-2 border-white p-2 rounded-xl'>Men</a>
           <a href="/women" className='border-2 border-white p-2 rounded-xl'>Women</a>
         </div>
       </div>
       <div className="products">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Product product={product} key={product.id} onClick={handleAddToCart} />
         ))}
       </div>

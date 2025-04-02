@@ -11,7 +11,9 @@ function Form({ route, method }) {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
-        passwordAgain: ""
+        passwordAgain: "",
+        name: "",
+        phone: ""
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -70,10 +72,19 @@ function Form({ route, method }) {
         setError("");
 
         try {
-            const res = await api.post(route, { 
-                email: formData.email, 
-                password: formData.password 
-            });
+            const requestData = isLogin 
+                ? { 
+                    email: formData.email, 
+                    password: formData.password 
+                }
+                : {
+                    email: formData.email,
+                    password: formData.password,
+                    name: formData.name,
+                    phone: formData.phone
+                };
+                
+            const res = await api.post(route, requestData);
             
             if (isLogin) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
@@ -88,7 +99,7 @@ function Form({ route, method }) {
             if(error.status === 401){
                 setError("Invalid email or password");
             }else if(error.status === 400){
-                setError("email already taken");
+                setError("Email already taken");
             }
             else{
                 alert(error);
@@ -110,13 +121,39 @@ function Form({ route, method }) {
                 
                 {error && <p className="error-message text-red-500">{error}</p>}
                 
+                {/* Registration-only fields */}
+                {!isLogin && (
+                    <>
+                        <input
+                            className="form-input"
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Full Name"
+                            required
+                        />
+                        
+                        <input
+                            className="form-input"
+                            type="tel"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder="Phone Number"
+                            required
+                        />
+                    </>
+                )}
+                
+                {/* Common fields for both login and register */}
                 <input
                     className="form-input"
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="email"
+                    placeholder="Email"
                     required
                 />
                 

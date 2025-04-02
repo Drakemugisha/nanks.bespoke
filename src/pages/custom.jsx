@@ -4,12 +4,19 @@ import Footer from '../components/footer';
 import { ACCESS_TOKEN } from '../constants';
 import api from '../api';
 import '../styles/cart.css';
+import Loader from '../components/loader';
 
 function Custom() {
-  const [gender, setGender] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone_number, setNumber] = useState("");
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
   const [customs, setCustoms] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000)}
+  );
 
   useEffect(() => {
     getCustoms();
@@ -35,7 +42,7 @@ function Custom() {
     e.preventDefault();
     const token = localStorage.getItem(ACCESS_TOKEN)
     api
-        .post("/api/custom/", { gender, email, phone_number },
+        .post("/api/custom/", { date, location},
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,9 +53,8 @@ function Custom() {
         .then((res) => {
             if (res.status === 201) alert("custom created!");
             else alert("Failed to create custom.");
-            setGender("");
-            setEmail("");
-            setNumber("");
+            setDate("");
+            setLocation("");
             getCustoms();
         })
         .catch((err) => alert(err));
@@ -56,6 +62,12 @@ function Custom() {
 
   return (
     <div>
+
+      {isLoading && <div className='loader-cont'>
+        
+        <Loader/>
+      </div>}
+
       <Nav />
 
         <div className='flex flex-col items-center justify-center h-screen'>
@@ -63,16 +75,12 @@ function Custom() {
             <h1>make appointment</h1>
             <form onSubmit={createNote} className='flex flex-col gap-3 appointment'>
                 <label>
-                gender:
-                <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} />
+                date:
+                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
                 </label>
                 <label>
-                email:
-                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </label>
-                <label>
-                phone number:
-                <input type="text" value={phone_number} onChange={(e) => setNumber(e.target.value)} />
+                location:
+                <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
                 </label>
                 <button className='border p-2 bg-white' type="submit">Customize suit</button>
             </form>
@@ -80,9 +88,9 @@ function Custom() {
             <ul className='flex flex-wrap'>
                 {customs.map((custom) => (
                   <li className='appointment'>
-                    <p>gender: {custom.gender}</p>
-                    <p>email: {custom.email}</p>
-                    <p>phone number: {custom.phone_number}</p>
+                    <p>email: {custom.user.email}</p>
+                    <p>location: {custom.location}</p>
+                    <p>date: {custom.date}</p>
                   </li>
                 ))}
             </ul>
