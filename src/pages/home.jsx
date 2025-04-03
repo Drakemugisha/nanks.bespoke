@@ -10,7 +10,7 @@ import shoe from '../assets/shoe.jpg';
 import manne from '../assets/mannequin.jpg';
 import threads from '../assets/threads.jpg'
 import Loader from '../components/loader';
-import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import {FaMailBulk ,FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import api from '../api';
 
 function Home() {
@@ -68,7 +68,7 @@ function Home() {
               <button className="btn"> <span> Buy Now</span></button>
             </a>
             <a href="/custom">
-              <button className="btn"> <span> book appointment</span></button>
+              <button className="btn"> <span> Book Appointment</span></button>
             </a>
 
             </div>
@@ -83,10 +83,10 @@ function Home() {
           <img src={gold} alt="" loading='lazy' />
           <img src={image2} alt="" />
           <img src={manne} alt="" />
-          <div className="fit-everything">
-            <p>Crafting timeless style with expert tailoring and premium materials. From luxurious fabrics to precision accessories, we provide everything you need for a flawless bespoke experience.</p>
+          <div className="fit-everything flex flex-col justify-center gap-1">
+            <p>Crafting elegant tailored suits and clothing.</p>
             <div className="btn">
-              <span> <a href="/custom"> book appointment </a></span>
+              <span> <a href="/custom"> Book ppointment </a></span>
             </div>
           </div>
           <img src={threads} alt="" />
@@ -99,9 +99,9 @@ function Home() {
         <h2>Why us?</h2>
         <p>We have been making suits for 10+ years, we know what we are doing</p>
         <div className="social flex gap-4 m-6 p-3 text-3xl">
-          <a href="https://www.facebook.com/"><FaFacebook/></a>
-          <a href="https://www.facebook.com/"><FaInstagram/></a>
-          <a href="https://www.facebook.com/"><FaTwitter/></a>
+          <a href="mailto:nanksbespoke@gmail.com"><FaMailBulk/></a>
+          <a href="https://www.instagram.com/nanksbespoke?igsh=djNnY21tdDRhYXEx&utm_source=qr"><FaInstagram/></a>
+          <a href="https://x.com/nanksbespoke?s=11"><FaTwitter/></a>
         </div>
       </div>
 
@@ -111,14 +111,14 @@ function Home() {
         <img src={image2} alt=""/>
       </div>
 
-        <p className='flex justify-center items-center'>leave us a message</p>
+        <p className='flex justify-center items-center'>Leave Us a Message</p>
       <div className="shop-link flex justify-center">
         <div className='flex'>
           <div className="p-10 max-sm:p-1 text-4xl flex flex-col gap-7 h-5/6 justify-center items-center">
-            <a href="https://www.facebook.com/"><FaFacebook/></a>
-            <a href="https://www.facebook.com/"><FaInstagram/></a>
-            <a href="https://www.facebook.com/"><FaTwitter/></a>
-            <a href="https://www.facebook.com/"><FaWhatsapp/></a>
+            <a href="mailto:nanksbespoke@gmail.com"><FaMailBulk/></a>
+            <a href="https://www.instagram.com/nanksbespoke?igsh=djNnY21tdDRhYXEx&utm_source=qr"><FaInstagram/></a>
+            <a href="https://x.com/nanksbespoke?s=11"><FaTwitter/></a>
+            <a href="https://wa.me/+256789132421"><FaWhatsapp/></a>
           </div>
           <form onSubmit={leaveMessage} className='flex flex-col justify-center items-center p-5 m-4'>
             <label>full name</label>

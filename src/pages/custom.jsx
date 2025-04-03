@@ -5,6 +5,7 @@ import { ACCESS_TOKEN } from '../constants';
 import api from '../api';
 import '../styles/cart.css';
 import Loader from '../components/loader';
+import SEO from '../components/seo';
 
 function Custom() {
   const [date, setDate] = useState("");
@@ -62,6 +63,8 @@ function Custom() {
 
   return (
     <div>
+
+      <SEO />
 
       {isLoading && <div className='loader-cont'>
         

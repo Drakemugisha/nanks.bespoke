@@ -151,7 +151,7 @@ const Cart = () => {
             </div>
         )}
 
-          <p className='text-2xl bg-white p-1 mt-2'>orders</p> <br />
+          <p className='text-2x border-b-4 p-1 mt-2 text-2xl'>orders</p> <br />
 
         {orders.length === 0 ? (
           <p className='text-2xl'>No orders yet or not logged in, login <a href="/login" className='text-blue-700 border-b-2'>here</a></p>

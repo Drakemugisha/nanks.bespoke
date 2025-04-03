@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Nav from '../components/navbar';
 import Footer from '../components/footer';
 import SEO from '../components/seo';
@@ -15,27 +15,125 @@ function Women() {
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [pagination, setPagination] = useState({
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
+  });
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000)}
-  );
-
-  useEffect(() => {
-      getProducts();
+    }, 1000);
+    
+    return () => clearTimeout(timer);
   }, []);
 
-  const getProducts = () => {
-      api
-          .get("/api/men/")
-          .then((res) => res.data)
-          .then((data) => {
-                  const femaleData = data.filter((product) => product.category === "female");
-                  setProducts(femaleData);
-                  console.log(femaleData);
-          })
-          .catch((err) => alert(err));
+  useEffect(() => {
+    getProducts(1, 'women');
+  }, []);
+
+  const getProducts = async (pageNumber = 1) => {
+    setIsLoading(true);
+    try {
+      const response = await api.get('/api/men/', {
+        params: {
+          page: pageNumber,
+          category: 'female',
+        },
+      });
+      
+      setProducts(response.data.results || []);
+      setPagination(response.data);
+      setCurrentPage(pageNumber);
+      console.log('Pagination data:', response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      
+      // Fallback to the old method if the new endpoint doesn't exist
+      try {
+        const response = await api.get('/api/men/');
+        const data = response.data;
+        const femaleData = Array.isArray(data) 
+          ? data.filter((product) => product.category === "female")
+          : [];
+        
+        setProducts(femaleData);
+        // Create a simple pagination object for the fallback approach
+        const itemsPerPage = 10; // Adjust as needed
+        const startIdx = (pageNumber - 1) * itemsPerPage;
+        const endIdx = startIdx + itemsPerPage;
+        const paginatedData = femaleData.slice(startIdx, endIdx);
+        
+        setPagination({
+          count: femaleData.length,
+          next: endIdx < femaleData.length ? pageNumber + 1 : null,
+          previous: pageNumber > 1 ? pageNumber - 1 : null,
+          results: paginatedData,
+        });
+        
+        setProducts(paginatedData);
+        setCurrentPage(pageNumber);
+      } catch (fallbackError) {
+        console.error('Fallback error:', fallbackError);
+        alert('Failed to load products');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePagination = (pageNumber) => {
+    console.log('Handling pagination with page number:', pageNumber);
+    
+    // If pageNumber is null or undefined and we're going to previous page,
+    // we should go to page 1
+    if (pageNumber === null || pageNumber === undefined) {
+      // Check if this is likely a "previous" operation from page 2
+      if (currentPage > 1) {
+        getProducts(1);
+        return;
+      }
+    }
+    
+    const page = parseInt(pageNumber, 10);
+    if (!isNaN(page)) {
+      getProducts(page);
+    } else {
+      console.error('Invalid page number:', pageNumber);
+    }
+  };
+
+  // Function to extract page number from URL
+  const extractPageNumber = (url) => {
+    if (!url) return null;
+    
+    // If url is just a number (from our fallback pagination)
+    if (!isNaN(parseInt(url, 10))) {
+      return parseInt(url, 10);
+    }
+    
+    try {
+      // Check if the URL has a page parameter
+      if (url.includes('page=')) {
+        const pageParam = url.split('page=')[1];
+        if (pageParam) {
+          return pageParam.split('&')[0]; // Handle case where there are other params after page
+        }
+      } 
+      // For URLs without page parameter, check if it's the base URL (for page 1)
+      else if (url.includes('/api/women/') || url.includes('/api/men/')) {
+        // This is likely the base URL for page 1
+        return 1;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error extracting page number:', error);
+      return null;
+    }
   };
 
   useEffect(() => {
@@ -50,20 +148,24 @@ function Women() {
   const handleAddToCart = (product) => {
     const existingCart = Cookies.get('cart') ? JSON.parse(Cookies.get('cart')) : [];
     const existingProduct = existingCart.find((item) => item.id === product.id);
+    
     if (existingProduct) {
-      existingCart.map((item) =>
+      const updatedCart = existingCart.map((item) =>
         item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
       );
+      Cookies.set('cart', JSON.stringify(updatedCart));
+      setCart(updatedCart);
     } else {
-      existingCart.push({ ...product, quantity: 1 });
+      const updatedCart = [...existingCart, { ...product, quantity: 1 }];
+      Cookies.set('cart', JSON.stringify(updatedCart));
+      setCart(updatedCart);
     }
-    Cookies.set('cart', JSON.stringify(existingCart));
-    setCart(existingCart);
+    
     setTotal(total + product.price);
     setCount(count + 1);
-    alert('item added to cart')
+    alert('Item added to cart');
   };
-  
+
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
@@ -72,13 +174,38 @@ function Women() {
     return product.name.toLowerCase().includes(searchQuery);
   });
 
+  // Simple handlers for Previous and Next
+  const handlePreviousClick = () => {
+    console.log('Previous button clicked');
+    console.log('Previous URL:', pagination.previous);
+    
+    // Special case: if we're on page 2 and previous URL has no page parameter
+    if (currentPage === 2 && pagination.previous && !pagination.previous.includes('page=')) {
+      console.log('Special case: Going to page 1');
+      getProducts(1);
+      return;
+    }
+    
+    const pageNumber = extractPageNumber(pagination.previous);
+    console.log('Extracted page number:', pageNumber);
+    handlePagination(pageNumber);
+  };
+
+  const handleNextClick = () => {
+    console.log('Next button clicked');
+    console.log('Next URL:', pagination.next);
+    const pageNumber = extractPageNumber(pagination.next);
+    console.log('Extracted page number:', pageNumber);
+    handlePagination(pageNumber);
+  };
+
   return (
     <div className='mt-20'>
-
-      {isLoading && <div className='loader-cont'>
-        
-        <Loader/>
-        </div>}
+      {isLoading && (
+        <div className='loader-cont'>
+          <Loader />
+        </div>
+      )}
 
       <SEO 
         title="Women's Collection | Tailored Suits & Clothing | Nanks Bespoke"
@@ -89,7 +216,7 @@ function Women() {
 
       <Nav total={count}/>
       <div className="links flex justify-around">
-      <div>
+        <div>
           <input
             type="search"
             value={searchQuery}
@@ -103,11 +230,39 @@ function Women() {
           <a href="/accessories" className='border-2 border-white p-2 rounded-xl'>Accessories</a>
         </div>
       </div>
+
       <div className="products">
-        {filteredProducts.map((product) => (
-          <Product product={product} key={product.id} onClick={handleAddToCart} />
-        ))}
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <Product product={product} key={product.id} onClick={handleAddToCart} />
+          ))
+        ) : (
+          <p className="text-center w-full p-4"><Loader/>.</p>
+        )}
       </div>
+      
+      <div className="pagination flex justify-center gap-4 my-4">
+        {pagination.previous && (
+          <button 
+            onClick={handlePreviousClick}
+            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+          >
+            Previous
+          </button>
+        )}
+        
+        <span className="px-4 py-2">Page {currentPage}</span>
+        
+        {pagination.next && (
+          <button 
+            onClick={handleNextClick}
+            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+          >
+            Next
+          </button>
+        )}
+      </div>
+      
       <Footer />
     </div>
   );

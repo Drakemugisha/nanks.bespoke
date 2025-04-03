@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 const SEO = ({ title, description, keywords, ogImage, pathname }) => {
-  const siteUrl = 'https://nanksbespoke.com'; 
+  const siteUrl = 'https://www.nanksbespoke.com'; 
   const defaultTitle = 'tailored suits kampala, nanks bespoke';
   const defaultDescription = 'Premium tailored suits and accessories for men and women in kampala and rest of uganda with over 10 years of experience. Custom tailoring and bespoke clothing made to measure.';
   const defaultKeywords = 'suits in kampala , tailored clothing, custom suits, men suits, women suits, accessories, Nanks Bespoke, kampala, Uganda, suits Uganda';

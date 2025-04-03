@@ -57,7 +57,7 @@ export default function Nav({total}){
                     </a>
                 </div>
                 
-                <a href="https://www.facebook.com/" id="whatsapp"><FaWhatsapp/></a>
+                <a href={`https://wa.me/+256789132421`} id="whatsapp"><FaWhatsapp/></a>
             </nav>
         </div>
     )
