@@ -124,7 +124,7 @@ function Women() {
         }
       } 
       // For URLs without page parameter, check if it's the base URL (for page 1)
-      else if (url.includes('/api/women/') || url.includes('/api/men/')) {
+      else if (url.includes('/api/men/')) {
         // This is likely the base URL for page 1
         return 1;
       }

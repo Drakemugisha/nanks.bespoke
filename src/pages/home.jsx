@@ -86,7 +86,7 @@ function Home() {
           <div className="fit-everything flex flex-col justify-center gap-1">
             <p>Crafting elegant tailored suits and clothing.</p>
             <div className="btn">
-              <span> <a href="/custom"> Book ppointment </a></span>
+              <span> <a href="/custom"> Book Appointment </a></span>
             </div>
           </div>
           <img src={threads} alt="" />
