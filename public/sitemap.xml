@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nanksbespoke.com/</loc>
+    <loc>https://www.nanksbespoke.com/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nanksbespoke.com/men</loc>
+    <loc>https://www.nanksbespoke.com/men</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nanksbespoke.com/women</loc>
+    <loc>https://www.nanksbespoke.com/women</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nanksbespoke.com/accessories</loc>
+    <loc>https://www.nanksbespoke.com/accessories</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nanksbespoke.com/custom</loc>
+    <loc>https://www.nanksbespoke.com/custom</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nanksbespoke.com/cart</loc>
+    <loc>https://www.nanksbespoke.com/cart</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
