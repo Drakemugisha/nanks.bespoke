@@ -20,9 +20,6 @@ export default function Nav({total}){
     SetIsActive(false);
     })
 
-    const handleLinkClick = ()=>{
-        window.href = "/men"
-    }
     return(
         <div>
             <SideBar state={isActive}/>
